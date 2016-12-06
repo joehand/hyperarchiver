@@ -1,0 +1,29 @@
+{
+  "name": "hyperarchiver",
+  "version": "1.0.0",
+  "description": "Host, backup, and share hyperdrive archives",
+  "bin": {
+    "hyperarchiver": "cli.js"
+  },
+  "scripts": {
+    "test": "standard"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joehand/hyperarchiver.git"
+  },
+  "author": "Joe Hand <joe@hand.email> (https://joeahand.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/joehand/hyperarchiver/issues"
+  },
+  "homepage": "https://github.com/joehand/hyperarchiver#readme",
+  "dependencies": {
+    "appa": "^6.0.0",
+    "archiver-api": "^1.0.0",
+    "archiver-server": "^2.0.2",
+    "debug": "^2.3.3",
+    "hypercore-archiver": "^2.3.0",
+    "minimist": "^1.2.0"
+  }
+}
