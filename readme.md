@@ -35,6 +35,14 @@ This starts two servers, one for HTTP access and one for Dat Network access.
 * Added archives will be available over the Dat network
 * Access archives over http via `/<archive-key>`
 
+### Add Archives
+
+Once the server is running, you can add archives (make sure you are hosting them over Dat). Send a POST request with `YOUR_DAT_KEY`:
+
+```
+curl -X POST -H "Content-Type: application/json" -d '{"key":"YOUR_DAT_KEY"}' http://127.0.0.1:8080/add
+```
+
 ### Usage Details
 
 ```
