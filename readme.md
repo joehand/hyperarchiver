@@ -45,9 +45,37 @@ curl -X POST -H "Content-Type: application/json" -d '{"key":"YOUR_DAT_KEY"}' htt
 
 ### Usage Details
 
+See all the options by running with the `--help` option:
+
 ```
 hyperarchiver --help
 ```
+
+### Http Routes
+
+#### `/add`: add a new archive
+
+Send a POST request to `/add` with a JSON object, `{"key": "YOUR_DAT_KEY"}`, to add a new archive.
+
+hyperarchiver will connect to the archive over Dat, copy it, and serve it over Dat and HTTP.
+
+#### `/remove`: remove an archive
+
+Send a POST request to `/add` with a JSON object, `{"key": "YOUR_DAT_KEY"}`, to add a new archive.
+
+hyperarchiver will connect to the archive over Dat, copy it, and serve it over Dat and HTTP.
+
+#### `/status`: hyperarchiver status
+
+Send a GET request to `/status` to view the hyperarchiver status.
+
+#### `/<archive-key>`
+
+View metadata for an archive that has been added.
+
+#### `/<archive-key>/<file>`
+
+View a file in an archive.
 
 ## License
 
