@@ -61,9 +61,9 @@ hyperarchiver will connect to the archive over Dat, copy it, and serve it over D
 
 #### `/remove`: remove an archive
 
-Send a POST request to `/add` with a JSON object, `{"key": "YOUR_DAT_KEY"}`, to add a new archive.
+Send a POST request to `/remove` with a JSON object, `{"key": "YOUR_DAT_KEY"}`, to remove a new archive.
 
-hyperarchiver will connect to the archive over Dat, copy it, and serve it over Dat and HTTP.
+hyperarchiver stop serving the archive and remove it from the database.
 
 #### `/status`: hyperarchiver status
 
