@@ -77,6 +77,27 @@ View metadata for an archive that has been added.
 
 View a file in an archive.
 
+## API
+
+### `var hyperarchiver = Hyperarchiver(opts)`
+
+Create a `hypercore-archiver` and attach the `archiver-server` and `archiver-api`. Hyperarchiver doesn't do much besides glue those three modules together.
+
+```js
+opts = {
+  dir: 'archives', // required
+  swarm: true, // join dat swarm.
+  archiveHttp: true, // serve archives over http
+  datPort: 3282, // port for dat swarm
+}
+```
+
+* `hyperarchiver.api` is `archiver-api`
+* `hyperarchiver.dat` is `archiver-server`
+* `hyperarchiver.archiver` is `hypercore-archiver`
+
+See `cli.js` for example usage.
+
 ## License
 
 MIT

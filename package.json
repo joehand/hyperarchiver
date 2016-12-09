@@ -2,6 +2,7 @@
   "name": "hyperarchiver",
   "version": "1.0.0",
   "description": "Host, backup, and share hyperdrive archives",
+  "main": "index.js",
   "bin": {
     "hyperarchiver": "cli.js"
   },

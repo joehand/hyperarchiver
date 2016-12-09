@@ -34,31 +34,17 @@ if (argv.debug) {
 }
 var debug = require('debug')('hyperarchiver')
 
-var fs = require('fs')
 var http = require('http')
-var Archiver = require('hypercore-archiver')
-var ArchiverServer = require('archiver-server')
-var ArchiverApi = require('archiver-api')
-var createApp = require('./app')
+var hyperarchiver = require('./index')(argv)
+var api = require('./app')(hyperarchiver.api)
+var swarm = hyperarchiver.dat.swarm
 
-try {
-  fs.accessSync(argv.dir, fs.F_OK)
-} catch (e) { fs.mkdirSync(argv.dir) }
-
-var archiver = Archiver(argv.dir)
-var archiverApi = ArchiverApi(archiver)
-var api = createApp(archiverApi)
-var datServer = ArchiverServer(archiver, {
-  swarm: argv.swarm,
-  http: argv.archiveHttp,
-  datPort: argv.datPort
-})
-var apiServer = http.createServer(function (req, res) {
+var httpServer = http.createServer(function (req, res) {
   if (['/add', '/remove', '/status'].indexOf(req.url) > -1) {
     return api(req, res)
-  } else if (argv.archiveHttp) {
+  } else if (opts.archiveHttp) {
     // TODO: errors for hyperdrive-http?
-    return datServer.httpRequest(req, res)
+    return hyperarchiver.dat.httpRequest(req, res)
   }
   console.error('No request handler found ' + req.url)
   res.writeHead(404, {'Content-Type': 'text/plain'})
@@ -67,12 +53,15 @@ var apiServer = http.createServer(function (req, res) {
   return
 })
 
-datServer.swarm.once('listening', function () {
-  if (argv.debug) debug('Connected to the Dat Network')
-  else console.log('Connected to the Dat Network')
-})
-apiServer.once('listening', function () {
+if (argv.swarm) {
+  swarm.once('listening', function () {
+    if (argv.debug) debug('Connected to the Dat Network')
+    else console.log('Connected to the Dat Network')
+  })
+}
+
+httpServer.once('listening', function () {
   if (argv.debug) debug('Server started at http://127.0.0.1:' + argv.httpPort)
   else console.log('Server started at http://127.0.0.1:' + argv.httpPort)
 })
-apiServer.listen(argv.httpPort)
+httpServer.listen(argv.httpPort)
