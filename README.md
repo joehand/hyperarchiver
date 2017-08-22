@@ -1,57 +1,29 @@
 # hyperarchiver
 
-* `create <archiver-name> <existing-changes-feed>` - create a new hypercore-archiver
-* `add <archiver-name> <key>` - add key to hypercore-archiver (if writable)
-* `list` - list archivers
-* `info <archiver-name>` - get info for a specific archiver
-
-Questions:
-
-* How to dedupe keys across archivers?
-
 [![npm][npm-image]][npm-url]
 [![travis][travis-image]][travis-url]
 [![standard][standard-image]][standard-url]
 
-* Collect dats via hypercore-archiver(s)
-* Track stats for each dat
-* Provides db interface to stats for each collection/archive
-* Shares stats information over dat
+hyperdb + hypercore-archiver. 
+
+* Adds dats via a key/value store
+* Host all dats added
+* Automatically track stats over time
 
 ## Example
 
 ```js
-var archiveCollector = require('hyperarchiver')
+var hyperarchiver = require('hyperarchiver')
 
-archiveCollector({
-  storage: {
-    db: './data/db',
-    archives: './data/archives'
-  },
-  collections: {
-    'city-of-portland': {
-      key: '<hypercore-archiver-changes-feed>',
-      sparse: true,
-      dir: 'portland' // ./data/archives/portland
-    }
-  }
-}, function (err, dbs) {
+var archiver = ('./data', {sparse: true})
+
+archiver.add('jhand/cli-demo', 'dat://key', function (err) {
   if (err) throw err
-
-  // get all the archives in 'dat-featured' collection
-  dbs['dat-featured'].read(function (err, data) {
-    console.log(data['<archive-key']) // prints dat.json and file stats
+  archiver.getStats('jhand/cli-demo', function (err, stats) {
+    if (err) throw err
+    console.log(stats)
   })
 })
-```
-
-The stats db will look like this:
-
-```
-/archive
-  /dat.json
-  /collections.json
-  /dat-featured.json
 ```
 
 ## Install

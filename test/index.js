@@ -12,15 +12,19 @@ test('Add and get from db + stats', function (t) {
     var archiver = hyperarchiver(dir, {sparse: true})
     archiver.add(testDat.name, testDat.key, function (err) {
       t.error(err, 'no error')
-      archiver.archives.list(function (err, data) {
+      archiver._archives.list(function (err, data) {
         t.error(err, 'no error')
         t.same(testDat.key, data[0].toString('hex'), 'in archives list')
 
-        archiver.db.get('cli-demo', function (err, val) {
+        archiver.getStats('cli-demo', function (err, val) {
           t.error(err, 'no error')
-          t.same(testDat.key, val[0].value, 'key added to db')
-          cleanup(function () {
-            t.end()
+          console.log(val)
+          t.same(testDat.key, val, 'key has stats')
+
+          archiver.close(function () {
+            cleanup(function () {
+              t.end()
+            })
           })
         })
       })

@@ -27,6 +27,7 @@
     "test": "standard && tape test/*.js | tap-spec"
   },
   "dependencies": {
+    "dat-encoding": "^4.0.2",
     "dat-json": "^1.0.1",
     "dat-node": "^3.5.1",
     "hypercore-archiver": "^4.1.3",
